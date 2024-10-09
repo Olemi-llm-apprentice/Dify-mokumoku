@@ -1,0 +1,299 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: Excel関係
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - document
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: true
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 2
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1727767420485-source-1727840403751-target
+      source: '1727767420485'
+      sourceHandle: source
+      target: '1727840403751'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1727764117417-source-1727840542891-target
+      source: '1727764117417'
+      sourceHandle: source
+      target: '1727840542891'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: code
+      id: 1727840542891-source-1727766995559-target
+      source: '1727840542891'
+      sourceHandle: source
+      target: '1727766995559'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: llm
+      id: 1727766995559-source-1727767420485-target
+      source: '1727766995559'
+      sourceHandle: source
+      target: '1727767420485'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1727764117417'
+      position:
+        x: -58.652702497512905
+        y: 251.01528037134625
+      positionAbsolute:
+        x: -58.652702497512905
+        y: 251.01528037134625
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1):\n    data=arg1[0]\n    return {\n        \"result\"\
+          : data\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: コード
+        type: code
+        variables:
+        - value_selector:
+          - '1727840542891'
+          - text
+          variable: arg1
+      height: 53
+      id: '1727766995559'
+      position:
+        x: -58.652702497512905
+        y: 477.29762675030247
+      positionAbsolute:
+        x: -58.652702497512905
+        y: 477.29762675030247
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 3601
+            max_tokens_to_sample: 3301
+            temperature: 0
+          mode: chat
+          name: gpt-4o-2024-08-06
+          provider: openai
+        prompt_template:
+        - id: f0d97630-8b57-4268-8a00-df96bbaf8b9b
+          role: system
+          text: '<添付ファイル>
+
+            {{#1727766995559.result#}}
+
+            </添付ファイル>
+
+            ===='
+        - id: 8e4da43f-50df-4e54-b385-97f079af3138
+          role: user
+          text: '{{#sys.query#}}
+
+            '
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1727840194338'
+            - first_record
+          enabled: false
+      height: 97
+      id: '1727767420485'
+      position:
+        x: 242.6826251657002
+        y: 251.01528037134625
+      positionAbsolute:
+        x: 242.6826251657002
+        y: 251.01528037134625
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '<添付ファイル>
+
+          {{#1727840542891.text#}}
+
+          ======================
+
+          <LLM回答>
+
+          {{#1727767420485.text#}}'
+        desc: ''
+        selected: true
+        title: 回答 2
+        type: answer
+        variables: []
+      height: 152
+      id: '1727840403751'
+      position:
+        x: 242.6826251657002
+        y: 435.9846672454308
+      positionAbsolute:
+        x: 242.6826251657002
+        y: 435.9846672454308
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - sys
+        - files
+      height: 93
+      id: '1727840542891'
+      position:
+        x: -58.652702497512905
+        y: 342.85877442729895
+      positionAbsolute:
+        x: -58.652702497512905
+        y: 342.85877442729895
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: lemio
+        desc: ''
+        height: 146
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"添付するExcelフォーマットはデータの無い行が消えてしまうので","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"元から空白行の無いフォーマットに修正してから添付しましょう。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 146
+      id: '1728387706483'
+      position:
+        x: -52.080186212646936
+        y: 88.41383790152457
+      positionAbsolute:
+        x: -52.080186212646936
+        y: 88.41383790152457
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: lemio
+        desc: ''
+        height: 203
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"①回答で出てきた、表データをコピーします。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"②そのまま元のフォーマットExcelにペーストするのではなく、一旦別の白紙シートにペーストしてから再度それをコピーします。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"③その後元のフォーマットExcelのシートに値貼り付けします。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"この処理を行うことで、フォーマットを崩さずペーストすることができます。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 203
+      id: '1728387739089'
+      position:
+        x: 253.21104682418445
+        y: 553.1846323313308
+      positionAbsolute:
+        x: 253.21104682418445
+        y: 553.1846323313308
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    viewport:
+      x: 560.3255186772243
+      y: -22.15868762735863
+      zoom: 1.065041103986062
